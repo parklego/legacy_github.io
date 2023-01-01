@@ -6,7 +6,7 @@
   padding-left: 20px;
   min-width: 200px;
   max-width: 230px;
-
+  display: none;
   .post-menu-title {
     font-size: $base-font-size * 1.5;
     margin-bottom: 14px;
@@ -39,7 +39,7 @@
 
         &:hover {
           text-decoration: none;
-          color: lighten($text-color, 20%)!important;
+          color: lighten($text-color, 20%) !important;
         }
       }
 

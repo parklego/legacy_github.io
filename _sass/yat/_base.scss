@@ -122,6 +122,7 @@ h6 {
 a {
   color: $brand-color;
   text-decoration: none;
+  cursor: pointer;
 
   &:hover {
     text-decoration: underline;
