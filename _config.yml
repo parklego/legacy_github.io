@@ -24,7 +24,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title:
+title: Ape
 email: hbd9425@gmail.com
 author: ape0722
 
