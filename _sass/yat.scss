@@ -18,7 +18,7 @@ $grey-color-light: lighten($grey-color, 40%) !default;
 $grey-color-dark: darken($grey-color, 25%) !default;
 
 $white-color: #fdfdfd !default;
-
+$black-color: #000000 !default;
 $table-text-align: left !default;
 
 $header-height: $base-line-height * $base-font-size * 2.85 !default;
@@ -29,7 +29,7 @@ $footer-height: $header-height * 1.05 !default;
 $footer-text-color: lighten(invert($theme-color), 25%) !default;
 $footer-background-color: darken($theme-color, 5%) !default;
 
-$banner-height: 420px !default;
+$banner-height: 400px !default;
 $banner-text-color: lighten($white-color, 0%) !default;
 $banner-background: rgba(0, 0, 0, 0.8) !default;
 
