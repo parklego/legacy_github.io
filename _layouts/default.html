@@ -20,8 +20,9 @@
         {{ content }}
       </div>
     </main>
-
+    <!-- about 페이지만 footer부분이 가운데로 오는 현상으로 이 페이지만 footer 보이지 않게 하기 -->
+    {% if page.title != "About" %}
     {%- include views/footer.html -%}
-
+    {% endif %}
   </body>
 </html>
