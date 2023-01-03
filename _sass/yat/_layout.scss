@@ -253,6 +253,8 @@ html {
   -ms-flex: none; /* <-- Fix IE footer issue */
   padding: $spacing-unit * 2 0;
   padding-top: 72px;
+  // Todo : fouc로 인한 footer 스타일링 깨짐으로 인한 최소높이 준 부분 수정하기
+  min-height: 60vh;
 }
 
 .page-heading {
