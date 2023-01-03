@@ -181,8 +181,10 @@ yat:
 # paginate: 5
 
 # Disqus comments
-# disqus:
-#   shortname: "Your Disqus username"
+comment:
+  provider: disqus
+  disqus:
+    shortname: "https-ape0722-github-io"
 
 # Gitment comments
 # gitment:
