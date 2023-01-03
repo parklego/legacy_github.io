@@ -212,7 +212,7 @@ kmarkdown:
 # Analytics
 analytics:
   provider:
-    "google-gtag"
+    "google"
     # false (default), "google", "google-universal", "google-gtag", "custom"
   google:
     tracking_id: "G-TEJYK7WDK8"
