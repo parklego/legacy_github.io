@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+<html class="no-js" lang="{{ page.lang | default: site.lang | default: "en" }}">
 
   {%- include head.html -%}
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6198824361218150"
   crossorigin="anonymous"></script>
-  <body>
+  <body id="fouc">
 
     {%- include views/header.html -%}
 
@@ -16,7 +16,7 @@
 
     {%- include extensions/click-to-top.html -%}
 
-    <main class="page-content" aria-label="Content">
+    <main class="page-content" aria-label="Content" >
       <div class="wrapper">
         {{ content }}
       </div>
@@ -24,5 +24,8 @@
     {% if page.title %}
     {%- include views/footer.html -%}
     {% endif %}
+    <script>
+      document.getElementById("fouc").style.display="block";
+    </script>
   </body>
 </html>

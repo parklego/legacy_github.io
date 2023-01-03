@@ -27,4 +27,12 @@
   {%- endif -%}
   {%- include extensions/code-highlight.html -%}
   {%- include custom-head.html -%}
+
+  <style>
+    .js #fouc {display: none}
+  </style>
+  <script>
+    (function(H){H.className=H.className.replace(/\bno-js\b/,'js')})(document.documentElement)
+  </script>
+  
 </head>
