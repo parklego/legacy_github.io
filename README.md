@@ -2,8 +2,8 @@
 
   <br>
   
-  <a href="https://github.com/jeffreytse/jekyll-theme-yat">
-    <img alt="ape0722" src="/Users/parkdonggun/Desktop/dev_blog/assets/images/banners/default_profile.png" width="200">
+  <a href="https://ape0722.github.io/">
+    <img alt="ape0722" src="assets/images/banners/default_profile.png" width="200">
   </a>
 </div>
 
