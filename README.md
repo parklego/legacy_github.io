@@ -3,7 +3,7 @@
   <br>
   
   <a href="https://github.com/jeffreytse/jekyll-theme-yat">
-    <img alt="jekyll-theme-yat →~ jekyll" src="https://user-images.githubusercontent.com/9413601/106478481-346fdf00-64e4-11eb-9385-1ab5329c3234.png" width="600">
+    <img alt="ape0722" src="/Users/parkdonggun/Desktop/dev_blog/assets/images/banners/default_profile.png" width="200">
   </a>
 </div>
 
@@ -17,6 +17,11 @@
   <a href="https://github.com/jeffreytse/jekyll-theme-yat/graphs/contributors">contributors </a>
   </sub>
 </div>
+
+<br>
+<br>
+
+> [ape0722의 개발 블로그 구경 하러가기](https://ape0722.github.io/)
 
 <br>
 
