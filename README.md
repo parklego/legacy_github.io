@@ -24,10 +24,11 @@
 
 I will proceed with the development according to the order below.
 
-- 템플릿의 파일 구조 및 작동 방식 익히기
-- Initialize 하기
-- 기본 셋팅 및 정보 기입 (+ 아이콘 누끼 딴 것 넣기)
-- 블로깅 작성하기
-- Github 블로그 검색엔진에 등록하기
-- 방문자 카운트 넣기
-- 댓글기능 넣기(DISQUS)
+[ x ] 템플릿의 파일 구조 및 작동 방식 익히기
+[ x ] Initialize 하기
+[ x ] 기본 셋팅 및 정보 기입 (+ 아이콘 누끼 딴 것 넣기)
+[ x ] 블로깅 작성하기
+[ x ] Github 블로그 검색엔진에 등록하기(구글,네이버,다음) - sitemap.xml
+[ x ] Google Analytics 등록하기
+[ x ] 댓글기능 넣기(DISQUS)
+[ ] Google AdSense 넣기
