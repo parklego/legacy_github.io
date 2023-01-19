@@ -6,7 +6,7 @@ categories: JavaScript
 tags: [JavaScript, ECMA, Hoisting]
 ---
 
-> velog 에서 해당 내용을 [포스팅](https://velog.io/@bathingape/JavaScript-var-let-const-%EC%B0%A8%EC%9D%B4%EC%A0%90) 하였는데 하루 평균 150명이 방문하여 곧 14만명을 돌파한다. 구글 검색 시 최상단에 노출 되고 있기도 하다.
+> velog 에서 해당 내용을 [포스팅](https://velog.io/@bathingape/JavaScript-var-let-const-%EC%B0%A8%EC%9D%B4%EC%A0%90) 하였는데 하루 평균 150명이 방문하여 14만명을 돌파하였다. 구글 검색 시 최상단에 노출 되고 있기도 하다.
 >
 > 이를 계기로 커스터마이징에 한계가 있는 velog를 벗어나 나만의 Dev 블로그를 만들기로 하였다. 아래는 그 내용을 그대로 가져왔다.
 
