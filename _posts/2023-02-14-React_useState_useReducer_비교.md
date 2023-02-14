@@ -135,11 +135,13 @@ const [toggleState, dispatchToggleAction] = React.useReducer(prev => !prev, fals
 
 #### 세번째, 서버와 클라이언트 state를 분리 시켜야 할 때 사용한다.
 
-reducer의 또 다른 좋은 특성은 인라인 하거나 클로져를 통해 props에 접근할 수 있다는 것입니다. 이 방법은 reducer 내부에서 props 또는 서버 state(예. useQuery hook이 리턴하는 state)에 접근할 때 매우 유용합니다. state 초기화를 통해 이러한 값들을 "복사"하지 않고도 reducer 함수에 전달할 수 있습니다.
+reducer의 또 다른 좋은 특성은 인라인 하거나 클로져를 통해 props에 접근할 수 있다는 것이다.
+
+이 방법은 reducer 내부에서 props 또는 서버 state(예. useQuery hook이 리턴하는 state)에 접근할 때 매우 유용하다. state 초기화를 통해 이러한 값들을 "복사"하지 않고도 reducer 함수에 전달할 수 있다.
 
 ```js
 const reducer = (data) => (state, action) => {
-  // ✅ 항상 최신 서버 state에 접근할 수 있습니다.
+  // ✅ 항상 최신 서버 state에 접근할 수 있다.
 };
 
 function App() {
