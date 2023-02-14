@@ -62,7 +62,7 @@ Reducer(리듀서)는 기본적으로 두 개의 인수(current state와 action)
 
 ### action
 
-오케이. 리듀서는 이해했어. 근데 action은 뭥미?
+오케이. 리듀서는 이해했어. 근데 action은 뭐야?
 
 action은 상태에 어떠한 변화가 필요하게 될 때, 발생시키는 것을 말한다. 액션 객체는 일반적으로 다음과 같은 형식으로 이뤄져있다.
 
@@ -101,20 +101,21 @@ state의 값을 특정 액션으로만 변경이 가능한 것이고, 특정 액
 
 #### 첫번째, 토글의 경우 사용 가능하다.
 
-```js
-const [toggleState, dispatchToggleAction] = React.useReducer(prev => !prev, false)
-
-<button onClick={dispatchToggleAction}>Toggle</button>
-```
-
 기존의 경우에는 토글부분을 구현할때, useState를 사용하여 콜백으로 사용하였다.
-<br/>
-하지만, useReducer를 사용하는 것이 UI구현부에서 로직이 숨겨져 가독성이 더 좋은 것 같다.
 
 ```js
 const [toggle, setToggle] = useState(false);
 
 <button onClick={setToggle((prev) => !prev)}>Toggle</button>;
+```
+
+<br/>
+하지만, useReducer를 사용하는 것이 UI구현부에서 로직이 숨겨져 가독성이 더 좋은 것 같다.
+
+```js
+const [toggleState, dispatchToggleAction] = React.useReducer(prev => !prev, false)
+
+<button onClick={dispatchToggleAction}>Toggle</button>
 ```
 
 <br/>
