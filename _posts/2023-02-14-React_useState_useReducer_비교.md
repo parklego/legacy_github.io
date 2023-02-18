@@ -1,7 +1,7 @@
 ---
 layout: post
-title: 리액트 useState와 useReducer는 언제써야할까?
-subtitle: 상태관리 Hooks 비교 + Context API
+title: 리액트 useState와 useReducer의 차이점 비교
+subtitle: 상태관리 Hooks 비교
 categories: React
 tags: [React, useState, useReducer, useContext]
 ---
@@ -62,7 +62,7 @@ Reducer(리듀서)는 기본적으로 두 개의 인수(current state와 action)
 
 ### action
 
-오케이. 리듀서는 이해했어. 근데 action은 뭐야?
+오케이. 그럼 action은 뭐야?
 
 action은 상태에 어떠한 변화가 필요하게 될 때, 발생시키는 것을 말한다. 액션 객체는 일반적으로 다음과 같은 형식으로 이뤄져있다.
 
@@ -87,7 +87,7 @@ state의 값을 특정 액션으로만 변경이 가능한 것이고, 특정 액
 
 디스패치는 정해놓은 action과 데이터(선택사항)를 리듀서에 보내는 함수라고 생각하면 된다.
 
-**useReducer를 이해하기 쉽게 정리하자면, dispatch를 통해 action을 보내면, reducer가 이를 받아 코드에 따라 적절하게 값을 변경한다고 정리하면 될 것 같다.**
+**한줄로 useReducer를 이해하기 쉽게 정리하자면, dispatch를 통해 action을 보내면, reducer가 이를 받아 코드에 따라 적절하게 값을 변경한다고 정리하면 될 것 같다.**
 
 ## 3. useState vs useReducer
 
