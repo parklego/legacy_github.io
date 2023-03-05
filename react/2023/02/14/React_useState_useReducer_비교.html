@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TEJYK7WDK8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-TEJYK7WDK8');
+</script>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="naver-site-verification" content="74569a5c3fd30344dc5441d4b0f6cac16de4723f">
+  <meta name="google-site-verification" content="dql4LA2z0t-L6Llmn2FauSf77ThLjSN-jQsz_-BC2sI">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>리액트 useState와 useReducer의 차이점 비교 | Ape</title>
+<meta name="generator" content="Jekyll v4.3.2">
+<meta property="og:title" content="리액트 useState와 useReducer의 차이점 비교">
+<meta name="author" content="ape0722">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="현재 라섹 수술 이후, 정상적인 시력으로 회복 중에 있다. 그래서 쉬면서 Udemy 강의를 통해 React 18버전으로 강의를 천천히 보고 있다. 실무에서는 대부분 useState를 써왔고, useReducer는 거의 사용하지 않았었는데 이번 기회를 통해 좀 더 깊게 탐구를 해보고 싶어졌고, 정리도 해보고 싶어졌다. 이번 포스팅으로 상태관리에 대한 부분은 헤매지 않았으면 하는 바람이다. 어떻게 import하고, state가 뭐고, 예제로 어떻게 사용하는지.. 등 기본적인 내용은 넘어간다.">
+<meta property="og:description" content="현재 라섹 수술 이후, 정상적인 시력으로 회복 중에 있다. 그래서 쉬면서 Udemy 강의를 통해 React 18버전으로 강의를 천천히 보고 있다. 실무에서는 대부분 useState를 써왔고, useReducer는 거의 사용하지 않았었는데 이번 기회를 통해 좀 더 깊게 탐구를 해보고 싶어졌고, 정리도 해보고 싶어졌다. 이번 포스팅으로 상태관리에 대한 부분은 헤매지 않았으면 하는 바람이다. 어떻게 import하고, state가 뭐고, 예제로 어떻게 사용하는지.. 등 기본적인 내용은 넘어간다.">
+<link rel="canonical" href="https://ape0722.github.io/jekyll-theme-yat/react/2023/02/14/React_useState_useReducer_%EB%B9%84%EA%B5%90.html">
+<meta property="og:url" content="https://ape0722.github.io/jekyll-theme-yat/react/2023/02/14/React_useState_useReducer_%EB%B9%84%EA%B5%90.html">
+<meta property="og:site_name" content="Ape">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2023-02-14T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="리액트 useState와 useReducer의 차이점 비교">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"ape0722"},"dateModified":"2023-02-14T00:00:00+00:00","datePublished":"2023-02-14T00:00:00+00:00","description":"현재 라섹 수술 이후, 정상적인 시력으로 회복 중에 있다. 그래서 쉬면서 Udemy 강의를 통해 React 18버전으로 강의를 천천히 보고 있다. 실무에서는 대부분 useState를 써왔고, useReducer는 거의 사용하지 않았었는데 이번 기회를 통해 좀 더 깊게 탐구를 해보고 싶어졌고, 정리도 해보고 싶어졌다. 이번 포스팅으로 상태관리에 대한 부분은 헤매지 않았으면 하는 바람이다. 어떻게 import하고, state가 뭐고, 예제로 어떻게 사용하는지.. 등 기본적인 내용은 넘어간다.","headline":"리액트 useState와 useReducer의 차이점 비교","mainEntityOfPage":{"@type":"WebPage","@id":"https://ape0722.github.io/jekyll-theme-yat/react/2023/02/14/React_useState_useReducer_%EB%B9%84%EA%B5%90.html"},"url":"https://ape0722.github.io/jekyll-theme-yat/react/2023/02/14/React_useState_useReducer_%EB%B9%84%EA%B5%90.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="icon" href="/assets/images/banners/default_profile.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://ape0722.github.io/jekyll-theme-yat/feed.xml" title="Ape">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<style>
+    .js #fouc {display: none}
+  </style>
+  <script>
+    (function(H){H.className=H.className.replace(/\bno-js\b/,'js')})(document.documentElement)
+  </script>
+  
+</head>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6198824361218150" crossorigin="anonymous"></script>
+  <body id="fouc">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="Ape" src="/assets/images/banners/default_profile.png" onerror="this.style.display='none'">
+  Ape
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<div id="click-to-top" class="click-to-top">
+  <i class="fa fa-arrow-up"></i>
+</div>
+<script>
+  (function () {
+    const clickToTop = document.getElementById('click-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        clickToTop.classList.add('show')
+      }else {
+        clickToTop.classList.remove('show')
+      }
+    });
+    clickToTop.addEventListener('click', () => {
+      window.smoothScrollTo(0);
+    });
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">리액트 useState와 useReducer의 차이점 비교</h1>
+  <h2 class="post-subtitle">상태관리 Hooks 비교</h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2023-02-14T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Feb 14, 2023
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 5 mins</span>
+  </p>
+<div class="post-tags">
+<a class="post-tag" href="/jekyll-theme-yat/tags.html#React">#React</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#useState">#useState</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#useReducer">#useReducer</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#useContext">#useContext</a>
+</div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <blockquote>
+  <p>현재 라섹 수술 이후, 정상적인 시력으로 회복 중에 있다. 그래서 쉬면서 Udemy 강의를 통해 React 18버전으로 강의를 천천히 보고 있다.</p>
+
+  <p>실무에서는 대부분 useState를 써왔고, useReducer는 거의 사용하지 않았었는데 이번 기회를 통해 좀 더 깊게 탐구를 해보고 싶어졌고, 정리도 해보고 싶어졌다. 이번 포스팅으로 상태관리에 대한 부분은 헤매지 않았으면 하는 바람이다. 어떻게 import하고, state가 뭐고, 예제로 어떻게 사용하는지.. 등 기본적인 내용은 넘어간다.</p>
+</blockquote>
+
+<p><br></p>
+
+<h2 id="1-usestate">1. useState</h2>
+
+<p>리액트에서 상태관리라고 하면, 가장 먼저 떠오르는 hooks 중 하나로 useState를 뽑을 수 있다.</p>
+
+<p>컴포넌트에서 state를 동적으로 관리하기 위해서 자주 사용되는 함수이다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 사용방법</span>
+<span class="kd">const</span> <span class="p">[</span><span class="nx">state</span><span class="p">,</span> <span class="nx">setState</span><span class="p">]</span> <span class="o">=</span> <span class="nf">useState</span><span class="p">(</span><span class="nx">initialState</span><span class="p">);</span>
+</code></pre></div></div>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 예시</span>
+<span class="kd">const</span> <span class="p">[</span><span class="nx">name</span><span class="p">,</span> <span class="nx">setName</span><span class="p">]</span> <span class="o">=</span> <span class="nf">useState</span><span class="p">(</span><span class="dl">""</span><span class="p">);</span>
+
+<span class="c1">// 초기값</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// ''</span>
+
+<span class="c1">// name state 재할당</span>
+<span class="nf">setName</span><span class="p">(</span><span class="dl">"</span><span class="s2">에이프</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="c1">// 랜더링 이후</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// 에이프</span>
+</code></pre></div></div>
+
+<p>setName함수를 통해 name의 값을 변경해줄 수 있다. setName은 상태 값을 갱신해주는 Setter 함수라고 한다.</p>
+
+<p><br></p>
+
+<h2 id="2-usereducer">2. useReducer</h2>
+
+<p>그렇다면, useReducer는 무엇인가? 앞서 사용법을 간단하게 정리해보자.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 사용방법</span>
+<span class="kd">const</span> <span class="p">[</span><span class="nx">state</span><span class="p">,</span> <span class="nx">dispatch</span><span class="p">]</span> <span class="o">=</span> <span class="nf">useReducer</span><span class="p">(</span><span class="nx">reducer</span><span class="p">,</span> <span class="nx">initialState</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>?? 사실 디스패치, 액션, 리듀서 바로 이해하긴 어렵다. 나 또한 한번에 이해하긴 힘들었으니까.</p>
+
+<p><br></p>
+
+<h3 id="reducer">reducer</h3>
+
+<p>가장 중요할 것 같은 리듀서.</p>
+
+<p>Reducer(리듀서)는 기본적으로 두 개의 인수(current state와 action)를 받고, 이렇게 받은 두 인수를 기반으로 해서 새 상태를 반환하는 함수이다.</p>
+
+<h3 id="action">action</h3>
+
+<p>오케이. 그럼 action은 뭐야?</p>
+
+<p>action은 상태에 어떠한 변화가 필요하게 될 때, 발생시키는 것을 말한다. 액션 객체는 일반적으로 다음과 같은 형식으로 이뤄져있다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 일반적으로 대문자와 _(언더바)를 조합하여 쓰는걸로 약속되어 있음.</span>
+<span class="p">{</span>
+  <span class="nl">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">INCREASE_NUMBER</span><span class="dl">"</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>리듀서는 왜 사용하는건데? 3가지 이유를 들 수 있다.</p>
+
+<ol>
+  <li>예측 가능하고 일관되게 작동하며, 그래서 복잡한 상태를 관리하는 데 적합하다.</li>
+  <li>일반적으로 테스트하기 쉽다.</li>
+  <li>실행 취소/다시 실행, 상태 지속성 등과 같은 헬퍼 함수는 reducer(리듀셔)로 구현하기가 더 쉽다.</li>
+</ol>
+
+<p>state의 값을 특정 액션으로만 변경이 가능한 것이고, 특정 액션일 때 액션의 리듀서 변경 함수 대로 처리된다. 그래서 위와 같은 이점을 가지는 것이다.</p>
+
+<p>이것이 리덕스에도 비슷한 개념으로 사용되는데 리덕스를 보면 역시나 예측가능하고 일관되게 작동하기 때문에 디버깅이 쉽다는 장점을 말하고 있다.</p>
+
+<h3 id="dispatch">dispatch</h3>
+
+<p>디스패치는 정해놓은 action과 데이터(선택사항)를 리듀서에 보내는 함수라고 생각하면 된다.</p>
+
+<p><strong>한줄로 useReducer를 이해하기 쉽게 정리하자면, dispatch를 통해 action을 보내면, reducer가 이를 받아 코드에 따라 적절하게 값을 변경한다고 정리하면 될 것 같다.</strong></p>
+
+<h2 id="3-usestate-vs-usereducer">3. useState vs useReducer</h2>
+
+<p>두 hooks 중에서 어떠한 경우에 어떤 함수를 사용 해야하는건지를 찾아봤다. 대부분의 블로그에서 일반적인 경우에는 useState, 복잡한 경우에는 useReducer를 쓰라고 한다.</p>
+
+<p>아니! 복잡한게 어떤게 복잡한거냐고…!!! 너무 주관적이잖아..</p>
+
+<p>아래와 같은 경우에 useReducer를 고려해보고, 그외에는 useState를 그대로 사용하면 될 듯 하다!</p>
+
+<p><br></p>
+
+<h4 id="첫번째-토글의-경우-사용-가능하다">첫번째, 토글의 경우 사용 가능하다.</h4>
+
+<p>기존의 경우에는 토글부분을 구현할때, useState를 사용하여 콜백으로 사용하였다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="p">[</span><span class="nx">toggle</span><span class="p">,</span> <span class="nx">setToggle</span><span class="p">]</span> <span class="o">=</span> <span class="nf">useState</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+
+<span class="o">&lt;</span><span class="nx">button</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{</span><span class="nf">setToggle</span><span class="p">((</span><span class="nx">prev</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="o">!</span><span class="nx">prev</span><span class="p">)}</span><span class="o">&gt;</span><span class="nx">Toggle</span><span class="o">&lt;</span><span class="sr">/button&gt;</span><span class="err">;
+</span></code></pre></div></div>
+
+<p><br>
+하지만, useReducer를 사용하는 것이 UI구현부에서 로직이 숨겨져 가독성이 더 좋은 것 같다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="p">[</span><span class="nx">toggleState</span><span class="p">,</span> <span class="nx">dispatchToggleAction</span><span class="p">]</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nf">useReducer</span><span class="p">(</span><span class="nx">prev</span> <span class="o">=&gt;</span> <span class="o">!</span><span class="nx">prev</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span>
+
+<span class="o">&lt;</span><span class="nx">button</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{</span><span class="nx">dispatchToggleAction</span><span class="p">}</span><span class="o">&gt;</span><span class="nx">Toggle</span><span class="o">&lt;</span><span class="sr">/button</span><span class="err">&gt;
+</span></code></pre></div></div>
+
+<p><br></p>
+
+<h4 id="두번째-복잡한-경우">두번째, 복잡한 경우..?</h4>
+
+<p>관리할 상태가 여러개이고, 서로가 의존하고 있으며, 상태를 조작할 동작이 여러개일 때는 useReducer를 사용하는 것이 낫다.</p>
+
+<p>여기에 해당하는 부분이 대부분의 블로그에서 말하는 복잡할 때에 해당하는 부분인 것 같다.</p>
+
+<p>코드를 깔끔하게 하기위해서도 여기에 해당한다.</p>
+
+<ul>
+  <li>상태가 변하는 로직을 reducer 한 군데 몰아넣음으로써 상태 간의 관계를 한 번에 파악하기 용이하고, reducer에 로직을 몰아넣음으로써 훅을 깔끔하게 유지할 수 있다.</li>
+  <li>액션이 여러 개일 때 위 이유와 마찬가지로 리듀서 한 군데에서 액션을 관리할 수 있다.</li>
+</ul>
+
+<p><br></p>
+
+<h4 id="세번째-서버와-클라이언트-state를-분리-시켜야-할-때-사용한다">세번째, 서버와 클라이언트 state를 분리 시켜야 할 때 사용한다.</h4>
+
+<p>reducer의 또 다른 좋은 특성은 인라인 하거나 클로져를 통해 props에 접근할 수 있다는 것이다.</p>
+
+<p>이 방법은 reducer 내부에서 props 또는 서버 state(예. useQuery hook이 리턴하는 state)에 접근할 때 매우 유용하다. state 초기화를 통해 이러한 값들을 “복사”하지 않고도 reducer 함수에 전달할 수 있다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">reducer</span> <span class="o">=</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="nx">state</span><span class="p">,</span> <span class="nx">action</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// ✅ 항상 최신 서버 state에 접근할 수 있다.</span>
+<span class="p">};</span>
+
+<span class="kd">function</span> <span class="nf">App</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">{</span> <span class="nx">data</span> <span class="p">}</span> <span class="o">=</span> <span class="nf">useQuery</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">queryFn</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">state</span><span class="p">,</span> <span class="nx">dispatch</span><span class="p">]</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nf">useReducer</span><span class="p">(</span><span class="nf">reducer</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><br></p>
+
+<h2 id="4-정리">4. 정리</h2>
+
+<ul>
+  <li>
+    <p>만약 state 변경이 독릭접으로 이뤄진다면 - 여러 useState로 분리하세요.</p>
+  </li>
+  <li>
+    <p>동시에 변경되거나 한 번에 하나의 필드만 변경(ex. 폼) 된다면 - 하나의 useState와 객체를 사용하세요.</p>
+  </li>
+  <li>
+    <p>사용자의 인터렉션이 state의 다른 부분을 변경한다면 (state가 서로 의존한다면) - useReducer를 사용하세요.</p>
+  </li>
+  <li>
+    <p>디버깅하기 용이하며, 로직을 분리하여 코드를 재사용하고, 깔끔하게 사용하고 싶다면 - useReducer를 사용하세요.</p>
+  </li>
+</ul>
+
+<p><br>
+<br></p>
+
+<hr>
+
+<h2 id="참고문서">참고문서</h2>
+
+<p><a href="https://cpro95.tistory.com/642">https://cpro95.tistory.com/642</a></p>
+
+<p><a href="https://www.philly.im/blog/use-state-vs-use-reducer">https://www.philly.im/blog/use-state-vs-use-reducer</a></p>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/%EB%A7%9B%EC%A7%91/2023/02/02/azulejo.html" title="예쁜 제주도 카페 - 아줄레주">예쁜 제주도 카페 - 아줄레주</a><span></span>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li>
+          <a class="post-link" href="/jekyll-theme-yat/javascript/2023/01/03/var_let_const_%EC%B0%A8%EC%9D%B4%EC%A0%90.html" title="">var, let, const 차이점</a>
+        </li>
+<li>
+          <a class="post-link" href="/jekyll-theme-yat/react/2023/02/14/React_useState_useReducer_%EB%B9%84%EA%B5%90.html" title="">리액트 useState와 useReducer의 차이점 비교</a>
+        </li>
+<li>
+          <a class="post-link" href="/jekyll-theme-yat/%EB%A7%9B%EC%A7%91/2023/02/02/azulejo.html" title="">예쁜 제주도 카페 - 아줄레주</a>
+        </li>
+</ul>
+    </div>
+<div class="post-comments"></div>
+<div id="disqus_thread"></div>
+    <script>
+      /**
+       *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+       *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+      /*
+        var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        */
+      (function () {
+        // DON'T EDIT BELOW THIS LINE
+        var d = document,
+          s = d.createElement("script");
+        s.src = "https://https-ape0722-github-io.disqus.com/embed.js";
+        s.setAttribute("data-timestamp", +new Date());
+        (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the
+      <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+  </section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main>
+    <footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2022-2023</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+    </div>
+  </div>
+</footer>
+
+    <script>
+      document.getElementById("fouc").style.display="block";
+    </script>
+  </body>
+</html>

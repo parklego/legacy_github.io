@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://ape0722.github.io/jekyll-theme-yat/feed.xml" rel="self" type="application/atom+xml" /><link href="https://ape0722.github.io/jekyll-theme-yat/" rel="alternate" type="text/html" /><updated>2023-03-05T11:56:46+00:00</updated><id>https://ape0722.github.io/jekyll-theme-yat/feed.xml</id><title type="html">Ape</title><subtitle>ape의 개발 블로그</subtitle><author><name>ape0722</name></author><entry><title type="html">리액트 useState와 useReducer의 차이점 비교</title><link href="https://ape0722.github.io/jekyll-theme-yat/react/2023/02/14/React_useState_useReducer_%EB%B9%84%EA%B5%90.html" rel="alternate" type="text/html" title="리액트 useState와 useReducer의 차이점 비교" /><published>2023-02-14T00:00:00+00:00</published><updated>2023-02-14T00:00:00+00:00</updated><id>https://ape0722.github.io/jekyll-theme-yat/react/2023/02/14/React_useState_useReducer_%EB%B9%84%EA%B5%90</id><content type="html" xml:base="https://ape0722.github.io/jekyll-theme-yat/react/2023/02/14/React_useState_useReducer_%EB%B9%84%EA%B5%90.html"><![CDATA[<blockquote>
+  <p>현재 라섹 수술 이후, 정상적인 시력으로 회복 중에 있다. 그래서 쉬면서 Udemy 강의를 통해 React 18버전으로 강의를 천천히 보고 있다.</p>
+
+  <p>실무에서는 대부분 useState를 써왔고, useReducer는 거의 사용하지 않았었는데 이번 기회를 통해 좀 더 깊게 탐구를 해보고 싶어졌고, 정리도 해보고 싶어졌다. 이번 포스팅으로 상태관리에 대한 부분은 헤매지 않았으면 하는 바람이다. 어떻게 import하고, state가 뭐고, 예제로 어떻게 사용하는지.. 등 기본적인 내용은 넘어간다.</p>
+</blockquote>
+
+<p><br /></p>
+
+<h2 id="1-usestate">1. useState</h2>
+
+<p>리액트에서 상태관리라고 하면, 가장 먼저 떠오르는 hooks 중 하나로 useState를 뽑을 수 있다.</p>
+
+<p>컴포넌트에서 state를 동적으로 관리하기 위해서 자주 사용되는 함수이다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 사용방법</span>
+<span class="kd">const</span> <span class="p">[</span><span class="nx">state</span><span class="p">,</span> <span class="nx">setState</span><span class="p">]</span> <span class="o">=</span> <span class="nf">useState</span><span class="p">(</span><span class="nx">initialState</span><span class="p">);</span>
+</code></pre></div></div>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 예시</span>
+<span class="kd">const</span> <span class="p">[</span><span class="nx">name</span><span class="p">,</span> <span class="nx">setName</span><span class="p">]</span> <span class="o">=</span> <span class="nf">useState</span><span class="p">(</span><span class="dl">""</span><span class="p">);</span>
+
+<span class="c1">// 초기값</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// ''</span>
+
+<span class="c1">// name state 재할당</span>
+<span class="nf">setName</span><span class="p">(</span><span class="dl">"</span><span class="s2">에이프</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="c1">// 랜더링 이후</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// 에이프</span>
+</code></pre></div></div>
+
+<p>setName함수를 통해 name의 값을 변경해줄 수 있다. setName은 상태 값을 갱신해주는 Setter 함수라고 한다.</p>
+
+<p><br /></p>
+
+<h2 id="2-usereducer">2. useReducer</h2>
+
+<p>그렇다면, useReducer는 무엇인가? 앞서 사용법을 간단하게 정리해보자.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 사용방법</span>
+<span class="kd">const</span> <span class="p">[</span><span class="nx">state</span><span class="p">,</span> <span class="nx">dispatch</span><span class="p">]</span> <span class="o">=</span> <span class="nf">useReducer</span><span class="p">(</span><span class="nx">reducer</span><span class="p">,</span> <span class="nx">initialState</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>?? 사실 디스패치, 액션, 리듀서 바로 이해하긴 어렵다. 나 또한 한번에 이해하긴 힘들었으니까.</p>
+
+<p><br /></p>
+
+<h3 id="reducer">reducer</h3>
+
+<p>가장 중요할 것 같은 리듀서.</p>
+
+<p>Reducer(리듀서)는 기본적으로 두 개의 인수(current state와 action)를 받고, 이렇게 받은 두 인수를 기반으로 해서 새 상태를 반환하는 함수이다.</p>
+
+<h3 id="action">action</h3>
+
+<p>오케이. 그럼 action은 뭐야?</p>
+
+<p>action은 상태에 어떠한 변화가 필요하게 될 때, 발생시키는 것을 말한다. 액션 객체는 일반적으로 다음과 같은 형식으로 이뤄져있다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 일반적으로 대문자와 _(언더바)를 조합하여 쓰는걸로 약속되어 있음.</span>
+<span class="p">{</span>
+  <span class="nl">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">INCREASE_NUMBER</span><span class="dl">"</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>리듀서는 왜 사용하는건데? 3가지 이유를 들 수 있다.</p>
+
+<ol>
+  <li>예측 가능하고 일관되게 작동하며, 그래서 복잡한 상태를 관리하는 데 적합하다.</li>
+  <li>일반적으로 테스트하기 쉽다.</li>
+  <li>실행 취소/다시 실행, 상태 지속성 등과 같은 헬퍼 함수는 reducer(리듀셔)로 구현하기가 더 쉽다.</li>
+</ol>
+
+<p>state의 값을 특정 액션으로만 변경이 가능한 것이고, 특정 액션일 때 액션의 리듀서 변경 함수 대로 처리된다. 그래서 위와 같은 이점을 가지는 것이다.</p>
+
+<p>이것이 리덕스에도 비슷한 개념으로 사용되는데 리덕스를 보면 역시나 예측가능하고 일관되게 작동하기 때문에 디버깅이 쉽다는 장점을 말하고 있다.</p>
+
+<h3 id="dispatch">dispatch</h3>
+
+<p>디스패치는 정해놓은 action과 데이터(선택사항)를 리듀서에 보내는 함수라고 생각하면 된다.</p>
+
+<p><strong>한줄로 useReducer를 이해하기 쉽게 정리하자면, dispatch를 통해 action을 보내면, reducer가 이를 받아 코드에 따라 적절하게 값을 변경한다고 정리하면 될 것 같다.</strong></p>
+
+<h2 id="3-usestate-vs-usereducer">3. useState vs useReducer</h2>
+
+<p>두 hooks 중에서 어떠한 경우에 어떤 함수를 사용 해야하는건지를 찾아봤다. 대부분의 블로그에서 일반적인 경우에는 useState, 복잡한 경우에는 useReducer를 쓰라고 한다.</p>
+
+<p>아니! 복잡한게 어떤게 복잡한거냐고…!!! 너무 주관적이잖아..</p>
+
+<p>아래와 같은 경우에 useReducer를 고려해보고, 그외에는 useState를 그대로 사용하면 될 듯 하다!</p>
+
+<p><br /></p>
+
+<h4 id="첫번째-토글의-경우-사용-가능하다">첫번째, 토글의 경우 사용 가능하다.</h4>
+
+<p>기존의 경우에는 토글부분을 구현할때, useState를 사용하여 콜백으로 사용하였다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="p">[</span><span class="nx">toggle</span><span class="p">,</span> <span class="nx">setToggle</span><span class="p">]</span> <span class="o">=</span> <span class="nf">useState</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+
+<span class="o">&lt;</span><span class="nx">button</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{</span><span class="nf">setToggle</span><span class="p">((</span><span class="nx">prev</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="o">!</span><span class="nx">prev</span><span class="p">)}</span><span class="o">&gt;</span><span class="nx">Toggle</span><span class="o">&lt;</span><span class="sr">/button&gt;</span><span class="err">;
+</span></code></pre></div></div>
+
+<p><br />
+하지만, useReducer를 사용하는 것이 UI구현부에서 로직이 숨겨져 가독성이 더 좋은 것 같다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="p">[</span><span class="nx">toggleState</span><span class="p">,</span> <span class="nx">dispatchToggleAction</span><span class="p">]</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nf">useReducer</span><span class="p">(</span><span class="nx">prev</span> <span class="o">=&gt;</span> <span class="o">!</span><span class="nx">prev</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span>
+
+<span class="o">&lt;</span><span class="nx">button</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{</span><span class="nx">dispatchToggleAction</span><span class="p">}</span><span class="o">&gt;</span><span class="nx">Toggle</span><span class="o">&lt;</span><span class="sr">/button</span><span class="err">&gt;
+</span></code></pre></div></div>
+
+<p><br /></p>
+
+<h4 id="두번째-복잡한-경우">두번째, 복잡한 경우..?</h4>
+
+<p>관리할 상태가 여러개이고, 서로가 의존하고 있으며, 상태를 조작할 동작이 여러개일 때는 useReducer를 사용하는 것이 낫다.</p>
+
+<p>여기에 해당하는 부분이 대부분의 블로그에서 말하는 복잡할 때에 해당하는 부분인 것 같다.</p>
+
+<p>코드를 깔끔하게 하기위해서도 여기에 해당한다.</p>
+
+<ul>
+  <li>상태가 변하는 로직을 reducer 한 군데 몰아넣음으로써 상태 간의 관계를 한 번에 파악하기 용이하고, reducer에 로직을 몰아넣음으로써 훅을 깔끔하게 유지할 수 있다.</li>
+  <li>액션이 여러 개일 때 위 이유와 마찬가지로 리듀서 한 군데에서 액션을 관리할 수 있다.</li>
+</ul>
+
+<p><br /></p>
+
+<h4 id="세번째-서버와-클라이언트-state를-분리-시켜야-할-때-사용한다">세번째, 서버와 클라이언트 state를 분리 시켜야 할 때 사용한다.</h4>
+
+<p>reducer의 또 다른 좋은 특성은 인라인 하거나 클로져를 통해 props에 접근할 수 있다는 것이다.</p>
+
+<p>이 방법은 reducer 내부에서 props 또는 서버 state(예. useQuery hook이 리턴하는 state)에 접근할 때 매우 유용하다. state 초기화를 통해 이러한 값들을 “복사”하지 않고도 reducer 함수에 전달할 수 있다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">reducer</span> <span class="o">=</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="nx">state</span><span class="p">,</span> <span class="nx">action</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// ✅ 항상 최신 서버 state에 접근할 수 있다.</span>
+<span class="p">};</span>
+
+<span class="kd">function</span> <span class="nf">App</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">{</span> <span class="nx">data</span> <span class="p">}</span> <span class="o">=</span> <span class="nf">useQuery</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">queryFn</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">state</span><span class="p">,</span> <span class="nx">dispatch</span><span class="p">]</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nf">useReducer</span><span class="p">(</span><span class="nf">reducer</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h2 id="4-정리">4. 정리</h2>
+
+<ul>
+  <li>
+    <p>만약 state 변경이 독릭접으로 이뤄진다면 - 여러 useState로 분리하세요.</p>
+  </li>
+  <li>
+    <p>동시에 변경되거나 한 번에 하나의 필드만 변경(ex. 폼) 된다면 - 하나의 useState와 객체를 사용하세요.</p>
+  </li>
+  <li>
+    <p>사용자의 인터렉션이 state의 다른 부분을 변경한다면 (state가 서로 의존한다면) - useReducer를 사용하세요.</p>
+  </li>
+  <li>
+    <p>디버깅하기 용이하며, 로직을 분리하여 코드를 재사용하고, 깔끔하게 사용하고 싶다면 - useReducer를 사용하세요.</p>
+  </li>
+</ul>
+
+<p><br />
+<br /></p>
+
+<hr />
+
+<h2 id="참고문서">참고문서</h2>
+
+<p><a href="https://cpro95.tistory.com/642">https://cpro95.tistory.com/642</a></p>
+
+<p><a href="https://www.philly.im/blog/use-state-vs-use-reducer">https://www.philly.im/blog/use-state-vs-use-reducer</a></p>]]></content><author><name>ape0722</name></author><category term="React" /><category term="React" /><category term="useState" /><category term="useReducer" /><category term="useContext" /><summary type="html"><![CDATA[현재 라섹 수술 이후, 정상적인 시력으로 회복 중에 있다. 그래서 쉬면서 Udemy 강의를 통해 React 18버전으로 강의를 천천히 보고 있다. 실무에서는 대부분 useState를 써왔고, useReducer는 거의 사용하지 않았었는데 이번 기회를 통해 좀 더 깊게 탐구를 해보고 싶어졌고, 정리도 해보고 싶어졌다. 이번 포스팅으로 상태관리에 대한 부분은 헤매지 않았으면 하는 바람이다. 어떻게 import하고, state가 뭐고, 예제로 어떻게 사용하는지.. 등 기본적인 내용은 넘어간다.]]></summary></entry><entry><title type="html">예쁜 제주도 카페 - 아줄레주</title><link href="https://ape0722.github.io/jekyll-theme-yat/%EB%A7%9B%EC%A7%91/2023/02/02/azulejo.html" rel="alternate" type="text/html" title="예쁜 제주도 카페 - 아줄레주" /><published>2023-02-02T00:00:00+00:00</published><updated>2023-02-02T00:00:00+00:00</updated><id>https://ape0722.github.io/jekyll-theme-yat/%EB%A7%9B%EC%A7%91/2023/02/02/azulejo</id><content type="html" xml:base="https://ape0722.github.io/jekyll-theme-yat/%EB%A7%9B%EC%A7%91/2023/02/02/azulejo.html"><![CDATA[<h4 id="맛집으로는-처음-포스팅을-하는군요-매-달-한-번은-꼭-맛있었던-기억에-남았던-맛집이나-카페를-소개해드리겠습니다">맛집으로는 처음 포스팅을 하는군요. 매 달 한 번은 꼭 맛있었던 기억에 남았던 맛집이나 카페를 소개해드리겠습니다.</h4>
+
+<p><br /><br /></p>
+
+<blockquote>
+  <p>첫 시작은 제주도 여행을 2박 3일 동안 하면서 가장 기억에 남았던 곳을 소개 할게요. 제주도에서만 먹을 수 있는 여러 음식들을 탐방하게 되었어요.</p>
+
+  <p>저희가 먹었던 음식들은 우진해장국, 말 고기,제주도한정 스타벅스 음료,갈치 회를 포함한 각종 회,뿔 소라 등 여러가지를 먹었답니다. 그 중에서도 제가 가장 기억에 남는 것이 에그타르트였어요.</p>
+</blockquote>
+
+<p><br /><br /></p>
+
+<p><img src="/assets/images/post_image/2023/01/0202f.JPG" alt="azulejo" width="100%" />
+<br /><br />
+첫 날은 눈이 많이 와서 맑은 하늘은 못봤었지만 2일차에는 맑은 하늘과 함께 사진을 찍을 수 있었어요.
+<br /><br />이 카페는 노키즈존이라 아이들의 울음소리를 듣지 않을 수 있어서 좋았어요. 과음해서 몸이 힘들었는데 힐링을 할 수 있었어요.
+<br /><br /></p>
+
+<p><img src="/assets/images/post_image/2023/01/0202c.JPG" alt="azulejo" width="100%" />
+<br /><br />요리하는 곳. 엄청 깔끔하고 분위기가 좋아보였어요.
+<br /><br /></p>
+
+<p><img src="/assets/images/post_image/2023/01/0202i.JPG" alt="azulejo" width="100%" />
+<br /><br />자리를 잡고 내부 샷. 구불구불길을 따라 숨겨져 있는 카페인데 사람이 엄청 많아요. 사람이 많을때 웨이팅도 해야한답니다.
+<br /><br /></p>
+
+<p><img src="/assets/images/post_image/2023/01/0202m.JPG" alt="azulejo" width="100%" />
+<br /><br />아줄레주의 메뉴판.
+<br /><br />저희는 제주황금향청티, 아메리카노, 에그타르트 이렇게 주문했어요. 화요일과 수요일은 휴무였군요. 확인 못했었는데 다행이였네요.
+<br /><br /></p>
+
+<p><img src="/assets/images/post_image/2023/01/0202u.JPG" alt="azulejo" width="100%" />
+<br /><br /> 제주황금향청티. 먹을만 했습니다. 개인적으로 옆에 동생이 시킨 아메리카노가 더 고급지고 맛있었어요.
+<br /><br /></p>
+
+<p><img src="/assets/images/post_image/2023/01/0202egg.JPG" alt="azulejo" width="100%" />
+<br /><br /> 기다리던 에그타르트. 정말 맛있었어요. 처음에 제가 계란먹으러 한시간이나 걸려서 가냐고.. 가지말자고 했지만 도착해서는 “하나 더 먹을까?” 할 정도로 맛있었는.. ㅎㅎ
+<br /><br />
+일본형이 에그타르트를 처음먹어본 순간이였는데 정말 맛있다고 극찬을 하더군요. 파리바게트의 에그타르트와는 정말 비교할 수 없을정도. 시나몬가루도 있는데 뿌려먹었더니 더 맛있었어요.
+<br /><br />
+나중에 요식업쪽에 일하는 친한형한테 물어봤는데 에그타르트는 손이 엄청 많이가는 요리라 하더라구요.
+<br /><br /></p>
+
+<p><img src="/assets/images/post_image/2023/01/0202t.JPG" alt="azulejo" width="100%" />
+<br /><br /> 카페 안에 화장실도 있어요. 고대 이집트가 생각이 나네요.
+<br /><br /></p>
+
+<p><img src="/assets/images/post_image/2023/01/0202v.JPG" alt="azulejo" width="100%" />
+<br /><br />나가기 전에 사진 한 장. 개인적으로 여기 뷰가 제일 이뻐보였어요. 날씨가 정말 좋을 때 오면 여기서 사진 찍을 때 마다 작품이 나올듯.
+<br /><br /></p>
+
+<hr />
+
+<p><br /><br /></p>
+
+<blockquote>
+  <p>아줄레주</p>
+
+  <p>서귀포시 성산읍 신풍리 627번지(풍풍하동로 19번길 59)</p>
+
+  <p>올해 제주에서 가장 사랑받은 카페 10곳 선정(2022)</p>
+
+  <p><a href="https://www.instagram.com/jeju_azulejo/">아줄레주 인스타 : https://www.instagram.com/jeju_azulejo/</a></p>
+
+  <p>★★★★☆ ( 4.0 / 5.0 )</p>
+</blockquote>
+
+<!-- ☆★ -->]]></content><author><name>ape0722</name></author><category term="맛집" /><category term="제주" /><category term="카페" /><category term="에그타르트" /><summary type="html"><![CDATA[맛집으로는 처음 포스팅을 하는군요. 매 달 한 번은 꼭 맛있었던 기억에 남았던 맛집이나 카페를 소개해드리겠습니다.]]></summary></entry><entry><title type="html">var, let, const 차이점</title><link href="https://ape0722.github.io/jekyll-theme-yat/javascript/2023/01/03/var_let_const_%EC%B0%A8%EC%9D%B4%EC%A0%90.html" rel="alternate" type="text/html" title="var, let, const 차이점" /><published>2023-01-03T00:00:00+00:00</published><updated>2023-01-03T00:00:00+00:00</updated><id>https://ape0722.github.io/jekyll-theme-yat/javascript/2023/01/03/var_let_const_%EC%B0%A8%EC%9D%B4%EC%A0%90</id><content type="html" xml:base="https://ape0722.github.io/jekyll-theme-yat/javascript/2023/01/03/var_let_const_%EC%B0%A8%EC%9D%B4%EC%A0%90.html"><![CDATA[<blockquote>
+  <p>velog 에서 해당 내용을 <a href="https://velog.io/@bathingape/JavaScript-var-let-const-%EC%B0%A8%EC%9D%B4%EC%A0%90">포스팅</a> 하였는데 하루 평균 150명이 방문하여 14만명을 돌파하였다. 구글 검색 시 최상단에 노출 되고 있기도 하다.</p>
+
+  <p>이를 계기로 커스터마이징에 한계가 있는 velog를 벗어나 나만의 Dev 블로그를 만들기로 하였다. 아래는 그 내용을 그대로 가져왔다.</p>
+</blockquote>
+
+<p><br /></p>
+
+<p>JavaScript에서 변수 선언 방식인 <code class="language-plaintext highlighter-rouge">var</code>, <code class="language-plaintext highlighter-rouge">let</code>, <code class="language-plaintext highlighter-rouge">const</code> 의 차이점에 대해 알아보자.</p>
+
+<h1 id="1-변수-선언-방식">1. 변수 선언 방식</h1>
+
+<p>우선, <code class="language-plaintext highlighter-rouge">var</code>는 변수 선언 방식에 있어서 큰 단점을 가지고 있다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">bathingape</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// bathingape</span>
+
+<span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">javascript</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// javascript</span>
+</code></pre></div></div>
+
+<p>변수를 한 번 더 선언했음에도 불구하고, 에러가 나오지 않고 각기 다른 값이 출력되는 것을 볼 수 있다.</p>
+
+<p>이는 유연한 변수 선언으로 간단한 테스트에는 편리 할 수 있겠으나, 코드량이 많아 진다면 어디에서 어떻게 사용 될지도 파악하기 힘들뿐더러 값이 바뀔 우려가 있다.</p>
+
+<p>그래서 ES6 이후, 이를 보완하기 위해 추가 된 변수 선언 방식이 <code class="language-plaintext highlighter-rouge">let</code> 과 <code class="language-plaintext highlighter-rouge">const</code> 이다.</p>
+
+<p>위의 코드에서 변수 선언 방식만 바꿔보자.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">bathingape</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// bathingape</span>
+
+<span class="kd">let</span> <span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">javascript</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+<span class="c1">// Uncaught SyntaxError: Identifier 'name' has already been declared</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">name</code>이 이미 선언 되었다는 에러 메세지가 나온다. (<code class="language-plaintext highlighter-rouge">const</code>도 마찬가지)</p>
+
+<p>변수 재선언이 되지 않는다.</p>
+
+<p>그렇다면 <code class="language-plaintext highlighter-rouge">let</code> 과 <code class="language-plaintext highlighter-rouge">const</code> 의 차이점은 무엇일까?</p>
+
+<p>이 둘의 차이점은 <code class="language-plaintext highlighter-rouge">immutable</code> 여부이다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">let</code> 은 변수에 재할당이 가능하다. 그렇지만,</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">bathingape</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// bathingape</span>
+
+<span class="kd">let</span> <span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">javascript</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+<span class="c1">// Uncaught SyntaxError: Identifier 'name' has already been declared</span>
+
+<span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">react</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span> <span class="c1">//react</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">const</code>는 변수 재선언, 변수 재할당 모두 불가능하다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">bathingape</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// bathingape</span>
+
+<span class="kd">const</span> <span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">javascript</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+<span class="c1">// Uncaught SyntaxError: Identifier 'name' has already been declared</span>
+
+<span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">react</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+<span class="c1">//Uncaught TypeError: Assignment to constant variable.</span>
+</code></pre></div></div>
+
+<h1 id="2-호이스팅">2. 호이스팅</h1>
+
+<p>호이스팅(Hoisting)이란, var 선언문이나 function 선언문 등을 해당 스코프의 선두로 옮긴 것처럼 동작하는 특성을 말한다.</p>
+
+<p>자바스크립트는 ES6에서 도입된 let, const를 포함하여 모든 선언(var, let, const, function, function*, class)을 호이스팅한다.</p>
+
+<p>하지만, <code class="language-plaintext highlighter-rouge">var</code> 로 선언된 변수와는 달리 <code class="language-plaintext highlighter-rouge">let</code> 로 선언된 변수를 선언문 이전에 참조하면 참조 에러(ReferenceError)가 발생한다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">);</span> <span class="c1">// undefined</span>
+<span class="kd">var</span> <span class="nx">foo</span><span class="p">;</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">bar</span><span class="p">);</span> <span class="c1">// Error: Uncaught ReferenceError: bar is not defined</span>
+<span class="kd">let</span> <span class="nx">bar</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>이는 <code class="language-plaintext highlighter-rouge">let</code> 로 선언된 변수는 스코프의 시작에서 변수의 선언까지 일시적 사각지대(Temporal Dead Zone; TDZ)에 빠지기 때문이다.</p>
+
+<p>참고로, 변수는 <code class="language-plaintext highlighter-rouge">선언 단계</code> &gt; <code class="language-plaintext highlighter-rouge">초기화 단계</code> &gt; <code class="language-plaintext highlighter-rouge">할당 단계</code> 에 걸쳐 생성되는데</p>
+
+<p><code class="language-plaintext highlighter-rouge">var</code> 으로 선언된 변수는 선언 단계와 초기화 단계가 한번에 이루어진다. 하지만,</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 스코프의 선두에서 선언 단계와 초기화 단계가 실행된다.</span>
+<span class="c1">// 따라서 변수 선언문 이전에 변수를 참조할 수 있다.</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">);</span> <span class="c1">// undefined</span>
+
+<span class="kd">var</span> <span class="nx">foo</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">);</span> <span class="c1">// undefined</span>
+
+<span class="nx">foo</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// 할당문에서 할당 단계가 실행된다.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">);</span> <span class="c1">// 1</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">let</code> 로 선언된 변수는 선언 단계와 초기화 단계가 분리되어 진행된다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 스코프의 선두에서 선언 단계가 실행된다.</span>
+<span class="c1">// 아직 변수가 초기화(메모리 공간 확보와 undefined로 초기화)되지 않았다.</span>
+<span class="c1">// 따라서 변수 선언문 이전에 변수를 참조할 수 없다.</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">);</span> <span class="c1">// ReferenceError: foo is not defined</span>
+
+<span class="kd">let</span> <span class="nx">foo</span><span class="p">;</span> <span class="c1">// 변수 선언문에서 초기화 단계가 실행된다.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">);</span> <span class="c1">// undefined</span>
+
+<span class="nx">foo</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// 할당문에서 할당 단계가 실행된다.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">);</span> <span class="c1">// 1</span>
+</code></pre></div></div>
+
+<h1 id="3-정리">3. 정리</h1>
+
+<p>그렇다면, 어떤 변수 선언 방식을 써야할까?</p>
+
+<p>변수 선언에는 기본적으로 <code class="language-plaintext highlighter-rouge">const</code>를 사용하고, 재할당이 필요한 경우에 한정해 <code class="language-plaintext highlighter-rouge">let</code> 을 사용하는 것이 좋다.</p>
+
+<p>그리고 객체를 재할당하는 경우는 생각보다 흔하지 않다. <code class="language-plaintext highlighter-rouge">const</code> 를 사용하면 의도치 않은 재할당을 방지해 주기 때문에 보다 안전하다.</p>
+
+<ol>
+  <li>
+    <p>재할당이 필요한 경우에 한정해 <code class="language-plaintext highlighter-rouge">let</code> 을 사용한다. 이때, 변수의 스코프는 최대한 좁게 만든다.</p>
+  </li>
+  <li>
+    <p>재할당이 필요 없는 상수와 객체에는 <code class="language-plaintext highlighter-rouge">const</code> 를 사용한다.</p>
+  </li>
+</ol>
+
+<h1 id="4-참조문서">4. 참조문서</h1>
+
+<ol>
+  <li><a href="https://markdowntutorial.com">https://markdowntutorial.com</a></li>
+  <li><a href="https://poiemaweb.com/es6-block-scope">https://poiemaweb.com/es6-block-scope</a></li>
+</ol>]]></content><author><name>ape0722</name></author><category term="JavaScript" /><category term="JavaScript" /><category term="ECMA" /><category term="Hoisting" /><summary type="html"><![CDATA[velog 에서 해당 내용을 포스팅 하였는데 하루 평균 150명이 방문하여 14만명을 돌파하였다. 구글 검색 시 최상단에 노출 되고 있기도 하다. 이를 계기로 커스터마이징에 한계가 있는 velog를 벗어나 나만의 Dev 블로그를 만들기로 하였다. 아래는 그 내용을 그대로 가져왔다.]]></summary></entry></feed>
