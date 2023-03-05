@@ -39,4 +39,5 @@ I will proceed with the development according to the order below.
 - [ ] Google AdSense 넣기(심사중)
 
 ---
-2023년 03월 05일 부로 티스토리로 블로그 이전
+2023년 03월 05일 부로 티스토리로 블로그 이전했습니다. 
+(https://parklego.tistory.com/)
