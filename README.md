@@ -37,3 +37,6 @@ I will proceed with the development according to the order below.
 - [x] Google Analytics 등록하기
 - [x] 댓글기능 넣기(DISQUS)
 - [ ] Google AdSense 넣기(심사중)
+
+---
+2023년 03월 05일 부로 티스토리로 블로그 이전
